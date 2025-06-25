@@ -11,7 +11,7 @@ function mult(x, y){
 }
 
 function div(x, y){
-    if(x == 0 || y == 0){
+    if(y == 0){
         preview.textContent = 'Cannot divide by zero'
         setTimeout(reset, 1500)
     }
@@ -55,6 +55,7 @@ function runCalc(){
     for(let i = 0;i < operators.length; i++){
         accumulator = parseFloat(calc(accumulator, numbers[i+1], operators[i]))
     }
+    console.log(numbers)
     numbers = []
     numbers.push(accumulator)
     console.log(numbers)
@@ -78,17 +79,23 @@ function delLast(){
 }
 
 function saveCurrNum(){
-    numbers.push(parseFloat(currNum))
+    if(isNaN(parseFloat(currNum))){
+        numbers.push(0)
+    } else {
+        numbers.push(parseFloat(currNum))
+    }
     currNum = ''
-    preview.textContent = 0
+    preview.textContent = '0'
 }
 
 function saveOperator(operator){
-    if(currNum == 0){
-        return 0
+    if(isNaN(parseFloat(currNum) && operator == '-')){
+        currNum = '-'
     }
-    saveCurrNum()
-    operators.push(operator.target.textContent)
+    else{
+        saveCurrNum()
+        operators.push(operator.target.textContent)
+    }
 }
 
 function currVal(keypad){
